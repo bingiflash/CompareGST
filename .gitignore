@@ -1,0 +1,4 @@
+purchase/*.xls*
+purchase/*.txt
+sales/*.xls*
+sales/*.txt
