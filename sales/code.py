@@ -24,17 +24,20 @@ local_merge = local_merge.sort_values(by=['I-Date','I-Number'])
 gov_merge = pd.merge(gov, local, how='left', indicator=True)
 gov_merge = gov_merge.sort_values(by=['I-Date','I-Number'])
 
-l_b_g_s = (local_merge[local_merge['_merge']!='both']).to_string(index=False)
-g_b_l_s = (gov_merge[gov_merge['_merge']!='both']).to_string(index=False)
+l_b_g_s_df = local_merge[local_merge['_merge']!='both']
+g_b_l_s_df = gov_merge[gov_merge['_merge']!='both']
+
+l_b_g_s = (l_b_g_s_df).to_string(index=False)
+g_b_l_s = (g_b_l_s_df).to_string(index=False)
 
 f = open('results.txt','w')
 f.write('\n\n')
-f.write('----------------------Local but not gov-------------------------------------\n')
+f.write(f'----------------------Local but not gov - {len(l_b_g_s_df.index)}-------------------------------------\n')
 f.write(l_b_g_s)
 f.write('\n----------------------------------------------------------------------------')
 
 f.write('\n\n')
-f.write('----------------------Gov but not local-------------------------------------\n')
+f.write(f'----------------------Gov but not local - {len(g_b_l_s_df.index)}-------------------------------------\n')
 f.write(g_b_l_s)
 f.write('\n----------------------------------------------------------------------------')
 
