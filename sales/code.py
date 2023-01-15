@@ -1,12 +1,22 @@
 import pandas as pd
 
+raw_gov_xl = pd.ExcelFile('gov.xlsx')
+
+b2b_sheetname = ""
+for sheet in raw_gov_xl.sheet_names:
+    if "b2b" in sheet:
+        b2b_sheetname = sheet
+
+raw_gov = raw_gov_xl.parse(b2b_sheetname, skiprows=3)
 raw_local = pd.read_excel("local.xls",sheet_name="b2b")
-raw_gov = pd.read_excel("gov.xlsx",sheet_name="b2b",skiprows=3)
 
-local = raw_local[['GSTIN/UIN of Recipient', 'Invoice Number', 'Invoice date', 'Invoice Value', 'Rate', 'Taxable Value']]
-gov = raw_gov[['GSTIN/UIN of Recipient', 'Invoice Number', 'Invoice date', 'Invoice Value', 'Rate', 'Taxable Value']]
+raw_gov.columns = map(str.lower, raw_gov.columns)
+raw_local.columns = map(str.lower, raw_local.columns)
 
-unique_column_names = ['GSTIN',  'I-Number','I-Date','I-Value','Tax-Rate','Taxable-Value']
+local = raw_local[['gstin/uin of recipient', 'invoice number', 'invoice date', 'invoice value', 'rate', 'taxable value']]
+gov = raw_gov[['gstin/uin of recipient', 'invoice number', 'invoice date', 'invoice value', 'rate', 'taxable value']]
+
+unique_column_names = ['GSTIN', 'I-Number','I-Date','I-Value','Tax-Rate','Taxable-Value']
 
 local.columns = unique_column_names
 gov.columns = unique_column_names
