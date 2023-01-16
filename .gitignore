@@ -2,3 +2,4 @@ purchase/*.xls*
 purchase/*.txt
 sales/*.xls*
 sales/*.txt
+purchase/__pycache__/*
